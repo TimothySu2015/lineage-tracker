@@ -1,0 +1,28 @@
+# .NET
+backend/**/bin/
+backend/**/obj/
+*.user
+*.suo
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# SQLite (本專案)
+backend/DemoApi/data/*.db
+backend/DemoApi/data/*.db-shm
+backend/DemoApi/data/*.db-wal
+
+# Issue body 暫存
+issue-body.md
