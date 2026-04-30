@@ -81,15 +81,30 @@ export default function AddConsumableForm({ defaultRate, onAdded, onError, onCan
         </div>
         <div>
           <label className="text-xs text-gray-500">金額</label>
-          <input type="number" min="0" value={amount} onChange={e => setAmount(e.target.value)}
-            className="w-full border rounded px-2 py-1.5 text-sm mt-0.5" />
+          <div className="flex items-center gap-1 mt-0.5">
+            <input type="number" min="0" value={amount} onChange={e => setAmount(e.target.value)}
+              className="flex-1 border rounded px-2 py-1.5 text-sm" />
+            <span className="text-sm text-gray-500 whitespace-nowrap">{currency === 'Adena' ? '天幣' : '元'}</span>
+          </div>
         </div>
         <div>
           <label className="text-xs text-gray-500">匯率</label>
-          <input type="number" min="1" value={rate} onChange={e => setRate(e.target.value)}
-            className="w-full border rounded px-2 py-1.5 text-sm mt-0.5" />
+          <div className="flex items-center gap-1 mt-0.5">
+            <span className="text-sm text-gray-500 whitespace-nowrap">1 元台幣 =</span>
+            <input type="number" min="1" value={rate} onChange={e => setRate(e.target.value)}
+              className="flex-1 border rounded px-2 py-1.5 text-sm" />
+            <span className="text-sm text-gray-500 whitespace-nowrap">天幣</span>
+          </div>
         </div>
       </div>
+      {amount !== '' && rate !== '' && !isNaN(parseInt(amount, 10)) && !isNaN(parseInt(rate, 10)) && parseInt(rate, 10) > 0 && (
+        <p className="text-xs text-gray-400">
+          {currency === 'Adena'
+            ? `≈ NT$ ${new Intl.NumberFormat('en-US').format(Math.round(parseInt(amount, 10) / parseInt(rate, 10)))}`
+            : `≈ ${new Intl.NumberFormat('en-US').format(Math.round(parseInt(amount, 10) * parseInt(rate, 10)))} 天幣`
+          }
+        </p>
+      )}
       <div>
         <label className="text-xs text-gray-500">日期時間</label>
         <input type="datetime-local" value={occurredAt} onChange={e => setOccurredAt(e.target.value)}

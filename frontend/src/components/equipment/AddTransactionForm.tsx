@@ -90,15 +90,30 @@ export default function AddTransactionForm({ slotId, defaultRate, presets, onAdd
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="text-xs text-gray-500">金額</label>
-          <input type="number" min="0" value={amount} onChange={e => setAmount(e.target.value)}
-            className="w-full border rounded px-2 py-1.5 text-sm" />
+          <div className="flex items-center gap-1">
+            <input type="number" min="0" value={amount} onChange={e => setAmount(e.target.value)}
+              className="flex-1 border rounded px-2 py-1.5 text-sm" />
+            <span className="text-sm text-gray-500 whitespace-nowrap">{currency === 'Adena' ? '天幣' : '元'}</span>
+          </div>
         </div>
         <div>
-          <label className="text-xs text-gray-500">匯率 (1 TWD = X Adena)</label>
-          <input type="number" min="1" value={rate} onChange={e => setRate(e.target.value)}
-            className="w-full border rounded px-2 py-1.5 text-sm" />
+          <label className="text-xs text-gray-500">匯率</label>
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-gray-500 whitespace-nowrap">1 元台幣 =</span>
+            <input type="number" min="1" value={rate} onChange={e => setRate(e.target.value)}
+              className="flex-1 border rounded px-2 py-1.5 text-sm" />
+            <span className="text-sm text-gray-500 whitespace-nowrap">天幣</span>
+          </div>
         </div>
       </div>
+      {amount !== '' && rate !== '' && !isNaN(parseInt(amount, 10)) && !isNaN(parseInt(rate, 10)) && parseInt(rate, 10) > 0 && (
+        <p className="text-xs text-gray-400">
+          {currency === 'Adena'
+            ? `≈ NT$ ${new Intl.NumberFormat('en-US').format(Math.round(parseInt(amount, 10) / parseInt(rate, 10)))}`
+            : `≈ ${new Intl.NumberFormat('en-US').format(Math.round(parseInt(amount, 10) * parseInt(rate, 10)))} 天幣`
+          }
+        </p>
+      )}
       {type === 'Fail' && (
         <div>
           <label className="text-xs text-gray-500">裝備是否消失？</label>

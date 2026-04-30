@@ -23,6 +23,7 @@ export default function ExchangeRateBar({ rate, onRateChange }: ExchangeRateBarP
       <span className="font-medium">預設匯率：</span>
       {editing ? (
         <>
+          <span className="whitespace-nowrap">1 元台幣 =</span>
           <input
             type="number"
             min="1"
@@ -30,6 +31,7 @@ export default function ExchangeRateBar({ rate, onRateChange }: ExchangeRateBarP
             onChange={e => setValue(e.target.value)}
             className="w-28 px-2 py-1 rounded text-gray-900 text-sm"
           />
+          <span className="whitespace-nowrap">天幣</span>
           <button onClick={handleSave} className="px-3 py-1 bg-white text-blue-600 rounded text-sm font-medium hover:bg-blue-50">
             儲存
           </button>
@@ -39,7 +41,7 @@ export default function ExchangeRateBar({ rate, onRateChange }: ExchangeRateBarP
         </>
       ) : (
         <>
-          <span>1 TWD = {new Intl.NumberFormat('en-US').format(rate)} Adena</span>
+          <span>1 元台幣 = {new Intl.NumberFormat('en-US').format(rate)} 天幣</span>
           <button onClick={() => { setValue(String(rate)); setEditing(true); }} className="underline text-blue-100 hover:text-white">
             編輯
           </button>
